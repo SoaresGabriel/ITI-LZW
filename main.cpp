@@ -11,15 +11,27 @@ using namespace std;
 void compress(const string &filename, unsigned long maxDictionarySize);
 void decompress(const string &filename);
 
-int main() {
+int main(int argc, char** argv) {
 
     clock_t initialTime = clock(), finalTime;
 
-    string filename = "teste.txt";
-    unsigned long maxDictionarySize = 999999;
+    if ((argc < 3 || argc > 4) || (argv[1][1] != 'c' && argv[1][1] != 'd') || (argc == 4 && argv[1][1] != 'c') || (argc == 3 && argv[1][1] != 'd')) {
+        cout << "Arguments: [-c N |-d] file" << endl;
+        exit(1);
+    } else if (argv[1][1] == 'c') {
 
-    //compress(filename, maxDictionarySize);
-    decompress("teste2.txt.LZW");
+        unsigned long maxDictionarySize = strtoul(argv[2], nullptr, 10);
+        string filename(argv[3]);
+
+        compress(filename, maxDictionarySize);
+
+        if(argv[1][2] == 'd') {
+            decompress(filename + ".LZW");
+        }
+
+    } else if (argv[1][1] == 'd') {
+        decompress(argv[2]);
+    }
 
     finalTime = clock();
     long executionTime = ((finalTime - initialTime) / (CLOCKS_PER_SEC / 1000));
@@ -32,11 +44,12 @@ void compress(const string &filename, unsigned long maxDictionarySize) {
     CompressTree compressTree(maxDictionarySize);
 
     ifstream inFile(filename, ifstream::binary);
-    LzwWriter writer(filename + ".LZW", maxDictionarySize);
-
     if(!inFile.good()) {
         cout << "Failed to open the file!" << endl;
     }
+
+    LzwWriter writer(filename + ".LZW", maxDictionarySize);
+
 
     CNode* current = compressTree.root;
     int symbol;
