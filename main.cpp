@@ -46,6 +46,7 @@ void compress(const string &filename, unsigned long maxDictionarySize) {
     ifstream inFile(filename, ifstream::binary);
     if(!inFile.good()) {
         cout << "Failed to open the file!" << endl;
+        exit(1);
     }
 
     LzwWriter writer(filename + ".LZW", maxDictionarySize);
@@ -81,8 +82,9 @@ void decompress(const string &filename) {
         exit(1);
     }
 
-    string outFilename = filename.substr(0, filename.find_last_of('.'));
-    outFilename.insert(outFilename.find_first_of('.'), "0");
+    string outFilename(filename);
+    outFilename.insert(outFilename.find_first_of('.'), "0"); // put '0' before first '.'
+    outFilename = outFilename.substr(0, outFilename.find_last_of('.')); // remove '.LZW'
 
     LzwReader reader(filename);
     DecompressTree decompressTree(reader.maxDictionarySize);
