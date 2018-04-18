@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include "BitWriter.h"
+#include "LzwWriter.h"
 #include "CompressTree.h"
 
 using namespace std;
@@ -16,7 +16,7 @@ int main() {
     CompressTree compressTree(dictionarySizeLimit);
 
     ifstream inFile(fileName, ifstream::binary);
-    BitWriter writer(fileName + ".LZW");
+    LzwWriter writer(fileName + ".LZW");
 
     if(!inFile.good()) {
         cout << "Failed to open the file!" << endl;

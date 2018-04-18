@@ -1,15 +1,11 @@
-//
-// Created by gabriel on 23/03/18.
-//
+#include "LzwWriter.h"
 
-#include "BitWriter.h"
-
-BitWriter::BitWriter(const string &fileName) :
+LzwWriter::LzwWriter(const string &fileName) :
         file(fileName, ofstream::binary), buffer(0), bitCount(0) {
 
 }
 
-void BitWriter::writeBit(bool bit) {
+void LzwWriter::writeBit(bool bit) {
     buffer = ((buffer << 1u) | bit);
     bitCount++;
 
@@ -19,13 +15,13 @@ void BitWriter::writeBit(bool bit) {
     }
 }
 
-void BitWriter::writeIndex(unsigned long index, unsigned int bits) {
+void LzwWriter::writeIndex(unsigned long index, unsigned int bits) {
     for(int b = bits - 1; b >= 0; b--) {
-        writeBit(((index >> b) & 1u) == 1u);
+        writeBit(((index >> static_cast<unsigned int>(b)) & 1u) == 1u);
     }
 }
 
-void BitWriter::close() {
+void LzwWriter::close() {
     if(bitCount > 0) {
         buffer = (buffer << 8u - bitCount);
         file.put(buffer);

@@ -1,22 +1,18 @@
-//
-// Created by gabriel on 17/04/18.
-//
-
-#ifndef LZW_BITWRITER_H
-#define LZW_BITWRITER_H
+#ifndef LZW_LZWWRITER_H
+#define LZW_LZWWRITER_H
 
 #include <iostream>
 #include <fstream>
 
 using namespace std;
 
-class BitWriter {
+class LzwWriter {
 private:
     unsigned char buffer;
     unsigned short bitCount;
     ofstream file;
 public:
-    explicit BitWriter(const string& fileName);
+    explicit LzwWriter(const string& fileName);
 
     void writeBit(bool bit);
 
@@ -25,4 +21,4 @@ public:
     void close();
 };
 
-#endif //LZW_BITWRITER_H
+#endif //LZW_LZWWRITER_H
