@@ -3,36 +3,36 @@
 
 #include <map>
 
-class Node {
+class CNode {
     friend class CompressTree;
 public:
 
     unsigned long index;
     int byte;
 
-    Node* getChild(int c) {
+    CNode* getChild(int c) {
         return childs[c];
     }
 
 private:
 
-    void insertChild(Node* child) {
+    void insertChild(CNode* child) {
         childs[child->byte] = child;
     }
 
-    Node(unsigned long index, int byte) : index(index), byte(byte) {}
-    std::map<int, Node*> childs;
+    CNode(unsigned long index, int byte) : index(index), byte(byte) {}
+    std::map<int, CNode*> childs;
 };
 
 class CompressTree {
 public:
-    Node* root;
+    CNode* root;
 
     unsigned int bitsForIndex;
 
     explicit CompressTree(unsigned long sizeLimit);
 
-    Node* newNodeChild(Node* parent, int byte);
+    CNode* newNodeChild(CNode* parent, int byte);
 
 private:
     unsigned long SIZE_LIMIT;

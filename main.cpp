@@ -22,10 +22,10 @@ int main() {
         cout << "Failed to open the file!" << endl;
     }
 
-    Node* current = compressTree.root;
+    CNode* current = compressTree.root;
     int symbol;
     while((symbol = inFile.get()) != EOF) {
-        Node* child = current->getChild(static_cast<unsigned char>(symbol));
+        CNode* child = current->getChild(static_cast<unsigned char>(symbol));
         if(child == nullptr) { // nó atual não tem esse byte, então deve comprimi-lo, e inseri-lo
             writer.writeIndex(current->index, compressTree.bitsForIndex);
             compressTree.newNodeChild(current, symbol);

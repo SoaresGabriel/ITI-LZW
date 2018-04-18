@@ -2,23 +2,23 @@
 
 CompressTree::CompressTree(unsigned long sizeLimit) : SIZE_LIMIT(sizeLimit) {
 
-    root = new Node(0, 0);
+    root = new CNode(0, 0);
 
     // insert the firsts elements to the dictionary
     for(size = 0; size < 256; size++) {
-        root->insertChild(new Node(size, static_cast<int>(size)));
+        root->insertChild(new CNode(size, static_cast<int>(size)));
     }
 
-    root->insertChild(new Node(size, EOF));
+    root->insertChild(new CNode(size, EOF));
     size++;
 
     bitsForIndex = 9;
     nextBitIncrease = 1u << bitsForIndex;
 }
 
-Node *CompressTree::newNodeChild(Node *parent, int byte) {
+CNode *CompressTree::newNodeChild(CNode *parent, int byte) {
     if(size < SIZE_LIMIT) {
-        parent->insertChild(new Node(size, byte));
+        parent->insertChild(new CNode(size, byte));
         size++;
 
         if(size > nextBitIncrease) {
