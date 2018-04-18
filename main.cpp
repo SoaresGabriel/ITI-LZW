@@ -69,6 +69,7 @@ void decompress(const string &filename) {
     }
 
     string outFilename = filename.substr(0, filename.find_last_of('.'));
+    outFilename.insert(outFilename.find_first_of('.'), "0");
 
     LzwReader reader(filename);
     DecompressTree decompressTree(reader.maxDictionarySize);
