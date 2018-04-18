@@ -3,10 +3,13 @@
 #include <map>
 #include "LzwWriter.h"
 #include "CompressTree.h"
+#include "LzwReader.h"
+#include "DecompressTree.h"
 
 using namespace std;
 
 void compress(const string &filename, unsigned long maxDictionarySize);
+void decompress(const string &filename);
 
 int main() {
 
@@ -15,7 +18,8 @@ int main() {
     string filename = "teste.txt";
     unsigned long maxDictionarySize = 999999;
 
-    compress(filename, maxDictionarySize);
+    //compress(filename, maxDictionarySize);
+    decompress("teste2.txt.LZW");
 
     finalTime = clock();
     long executionTime = ((finalTime - initialTime) / (CLOCKS_PER_SEC / 1000));
@@ -56,4 +60,39 @@ void compress(const string &filename, unsigned long maxDictionarySize) {
 
     inFile.close();
     writer.close();
+}
+
+void decompress(const string &filename) {
+    if(filename.size() <= 4 || filename.substr(filename.find_last_of('.')) != ".LZW") {
+        cout << "Invalid compressed file! (not .LZW)!" << endl;
+        exit(1);
+    }
+
+    string outFilename = filename.substr(0, filename.find_last_of('.'));
+
+    LzwReader reader(filename);
+    DecompressTree decompressTree(reader.maxDictionarySize);
+    ofstream outfile(outFilename, ofstream::binary);
+
+    DNode* lastNode = nullptr;
+    while(true) {
+        unsigned long index = reader.readIndex(decompressTree.bitsForIndex);
+
+        DNode* node = decompressTree[index];
+
+        if(node->byte == EOF) {
+            break;
+        }
+
+        if(lastNode != nullptr) {
+            lastNode->byte = node->getFirstByte();
+        }
+
+        node->writeStringIn(outfile);
+
+        lastNode = decompressTree.newChildNode(index);
+    }
+
+    outfile.close();
+    reader.close();
 }
