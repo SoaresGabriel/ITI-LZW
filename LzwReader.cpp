@@ -8,7 +8,7 @@ LzwReader::LzwReader(string fileName) :
         exit(1);
     }
 
-    file.read((char*) &dictionarySizeLimit, sizeof(unsigned long));
+    file.read((char*) &maxDictionarySize, sizeof(unsigned long));
 }
 
 bool LzwReader::getBit() {
@@ -22,7 +22,7 @@ bool LzwReader::getBit() {
     return (bool) ((buffer >> bitCount) & 1u);
 }
 
-unsigned long LzwReader::getIndex(unsigned int bits) {
+unsigned long LzwReader::readIndex(unsigned int bits) {
     unsigned long index = 0;
 
     for(int i = 0; i < bits; i++) {

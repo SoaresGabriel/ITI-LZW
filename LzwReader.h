@@ -16,11 +16,11 @@ private:
 
 public:
 
-    unsigned long dictionarySizeLimit;
+    unsigned long maxDictionarySize;
 
     explicit LzwReader(string filename);
 
-    unsigned long getIndex(unsigned int bits);
+    unsigned long readIndex(unsigned int bits);
 
     void close();
 };
