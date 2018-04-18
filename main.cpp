@@ -6,17 +6,29 @@
 
 using namespace std;
 
+void compress(const string &filename, unsigned long maxDictionarySize);
+
 int main() {
 
     clock_t initialTime = clock(), finalTime;
 
-    string fileName = "teste.txt";
-    unsigned long dictionarySizeLimit = 999999;
+    string filename = "teste.txt";
+    unsigned long maxDictionarySize = 999999;
 
-    CompressTree compressTree(dictionarySizeLimit);
+    compress(filename, maxDictionarySize);
 
-    ifstream inFile(fileName, ifstream::binary);
-    LzwWriter writer(fileName + ".LZW", dictionarySizeLimit);
+    finalTime = clock();
+    long executionTime = ((finalTime - initialTime) / (CLOCKS_PER_SEC / 1000));
+    cout << "t: " << executionTime << " ms" << endl;
+
+    return 0;
+}
+
+void compress(const string &filename, unsigned long maxDictionarySize) {
+    CompressTree compressTree(maxDictionarySize);
+
+    ifstream inFile(filename, ifstream::binary);
+    LzwWriter writer(filename + ".LZW", maxDictionarySize);
 
     if(!inFile.good()) {
         cout << "Failed to open the file!" << endl;
@@ -44,10 +56,4 @@ int main() {
 
     inFile.close();
     writer.close();
-
-    finalTime = clock();
-    long executionTime = ((finalTime - initialTime) / (CLOCKS_PER_SEC / 1000));
-    cout << "t: " << executionTime << " ms" << endl;
-
-    return 0;
 }
