@@ -13,15 +13,17 @@ CompressTree::CompressTree(unsigned long sizeLimit) : SIZE_LIMIT(sizeLimit) {
     size++;
 
     bitsForIndex = 9;
-    nextBitIncrease = 512;
+    nextBitIncrease = 1u << bitsForIndex;
 }
 
 Node *CompressTree::newNodeChild(Node *parent, int byte) {
-    parent->insertChild(new Node(size, byte));
-    size++;
+    if(size < SIZE_LIMIT) {
+        parent->insertChild(new Node(size, byte));
+        size++;
 
-    if(size > nextBitIncrease) {
-        bitsForIndex++;
-        nextBitIncrease <<= 1u; // * 2
+        if(size > nextBitIncrease) {
+            bitsForIndex++;
+            nextBitIncrease <<= 1u; // * 2
+        }
     }
 }
