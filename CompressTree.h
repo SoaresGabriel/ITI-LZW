@@ -1,7 +1,7 @@
 #ifndef LZW_COMPRESSTREE_H
 #define LZW_COMPRESSTREE_H
 
-#include <map>
+#include <unordered_map>
 
 class CNode {
     friend class CompressTree;
@@ -21,7 +21,7 @@ private:
     }
 
     CNode(unsigned long index, int byte) : index(index), byte(byte) {}
-    std::map<int, CNode*> childs;
+    std::unordered_map<int, CNode*> childs;
 };
 
 class CompressTree {
