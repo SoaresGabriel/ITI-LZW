@@ -12,7 +12,7 @@ private:
     unsigned short bitCount;
     ofstream file;
 public:
-    explicit LzwWriter(const string& fileName);
+    LzwWriter(const string& fileName, unsigned long sizeLimit);
 
     void writeBit(bool bit);
 

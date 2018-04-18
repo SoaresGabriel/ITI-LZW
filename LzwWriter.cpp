@@ -1,8 +1,8 @@
 #include "LzwWriter.h"
 
-LzwWriter::LzwWriter(const string &fileName) :
+LzwWriter::LzwWriter(const string &fileName, unsigned long sizeLimit) :
         file(fileName, ofstream::binary), buffer(0), bitCount(0) {
-
+    file.write((char*) &sizeLimit, sizeof(unsigned long));
 }
 
 void LzwWriter::writeBit(bool bit) {

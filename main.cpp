@@ -16,7 +16,7 @@ int main() {
     CompressTree compressTree(dictionarySizeLimit);
 
     ifstream inFile(fileName, ifstream::binary);
-    LzwWriter writer(fileName + ".LZW");
+    LzwWriter writer(fileName + ".LZW", dictionarySizeLimit);
 
     if(!inFile.good()) {
         cout << "Failed to open the file!" << endl;
