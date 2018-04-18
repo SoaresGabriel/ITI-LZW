@@ -1,9 +1,9 @@
 #include <stdexcept>
 #include "DecompressTree.h"
 
-char DNode::getFirstByte() {
+int DNode::getFirstByte() {
     if(parent == nullptr) {
-        return static_cast<char>(byte);
+        return byte;
     } else {
         return parent->getFirstByte();
     }
