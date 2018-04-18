@@ -10,7 +10,7 @@ struct DNode {
     int byte;
 
     DNode(DNode* parent, int byte) : parent(parent), byte(byte) {}
-    explicit DNode(DNode* parent) : parent(parent), byte(-1) {}
+    explicit DNode(DNode* parent) : parent(parent), byte(-2) {}
 
     char getFirstByte();
     void writeStringIn(std::ofstream& file);
