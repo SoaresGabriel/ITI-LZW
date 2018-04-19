@@ -16,7 +16,7 @@ CompressTree::CompressTree(unsigned long sizeLimit) : SIZE_LIMIT(sizeLimit) {
     nextBitIncrease = 1u << bitsForIndex;
 }
 
-CNode *CompressTree::newNodeChild(CNode *parent, int byte) {
+void CompressTree::newNodeChild(CNode *parent, int byte) {
     if(size < SIZE_LIMIT) {
         parent->insertChild(new CNode(size, byte));
         size++;

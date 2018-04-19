@@ -32,7 +32,7 @@ public:
 
     explicit CompressTree(unsigned long sizeLimit);
 
-    CNode* newNodeChild(CNode* parent, int byte);
+    void newNodeChild(CNode* parent, int byte);
 
 private:
     unsigned long SIZE_LIMIT;
