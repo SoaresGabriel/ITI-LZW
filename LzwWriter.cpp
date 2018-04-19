@@ -23,7 +23,7 @@ void LzwWriter::writeIndex(unsigned long index, unsigned int bits) {
 
 void LzwWriter::close() {
     if(bitCount > 0) {
-        buffer = (buffer << 8u - bitCount);
+        buffer = buffer << (8u - bitCount);
         file.put(buffer);
     }
     file.close();

@@ -8,9 +8,9 @@ using namespace std;
 
 class LzwWriter {
 private:
+    ofstream file;
     unsigned char buffer;
     unsigned short bitCount;
-    ofstream file;
 public:
     LzwWriter(const string& fileName, int powerMaxSize);
 

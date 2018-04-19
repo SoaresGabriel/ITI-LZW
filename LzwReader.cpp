@@ -26,7 +26,7 @@ bool LzwReader::getBit() {
 unsigned long LzwReader::readIndex(unsigned int bits) {
     unsigned long index = 0;
 
-    for(int i = 0; i < bits; i++) {
+    for(unsigned int i = 0; i < bits; i++) {
         index = (index << 1u) | getBit();
     }
 
