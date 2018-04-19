@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void compress(const string &filename, unsigned long maxDictionarySize);
+void compress(const string &filename, unsigned int powerMaxSize);
 void decompress(const string &filename);
 
 int main(int argc, char** argv) {
@@ -16,14 +16,20 @@ int main(int argc, char** argv) {
     clock_t initialTime = clock(), finalTime;
 
     if ((argc < 3 || argc > 4) || (argv[1][1] != 'c' && argv[1][1] != 'd') || (argc == 4 && argv[1][1] != 'c') || (argc == 3 && argv[1][1] != 'd')) {
-        cout << "Arguments: [-c N |-d] file" << endl;
+        cout << "Arguments: [-c p |-d] file" << endl;
         exit(1);
     } else if (argv[1][1] == 'c') {
 
-        unsigned long maxDictionarySize = strtoul(argv[2], nullptr, 10);
+        // get the power of 2 of the size limit of dictionary
+        unsigned int p = static_cast<unsigned int>(stoi(argv[2]));
+        if(p < 9 || p > sizeof(unsigned long) * 8 - 1) {
+            cout << "Invalid 'p', must be in (8," << sizeof(unsigned long) * 8 << ")" << endl;
+            exit(1);
+        }
+
         string filename(argv[3]);
 
-        compress(filename, maxDictionarySize);
+        compress(filename, p);
 
         if(argv[1][2] == 'd') {
             decompress(filename + ".LZW");
@@ -40,7 +46,10 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void compress(const string &filename, unsigned long maxDictionarySize) {
+void compress(const string &filename, unsigned int powerMaxSize) {
+
+    unsigned long maxDictionarySize = (1ul << powerMaxSize);
+
     CompressTree compressTree(maxDictionarySize);
 
     ifstream inFile(filename, ifstream::binary);
@@ -50,7 +59,6 @@ void compress(const string &filename, unsigned long maxDictionarySize) {
     }
 
     LzwWriter writer(filename + ".LZW", maxDictionarySize);
-
 
     CNode* current = compressTree.root;
     int symbol;
