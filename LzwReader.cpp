@@ -8,7 +8,8 @@ LzwReader::LzwReader(string fileName) :
         exit(1);
     }
 
-    file.read((char*) &maxDictionarySize, sizeof(unsigned long));
+    int powerMaxSize = file.get();
+    maxDictionarySize = 1ul << powerMaxSize;
 }
 
 bool LzwReader::getBit() {

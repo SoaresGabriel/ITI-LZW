@@ -58,7 +58,7 @@ void compress(const string &filename, unsigned int powerMaxSize) {
         exit(1);
     }
 
-    LzwWriter writer(filename + ".LZW", maxDictionarySize);
+    LzwWriter writer(filename + ".LZW", powerMaxSize);
 
     CNode* current = compressTree.root;
     int symbol;
