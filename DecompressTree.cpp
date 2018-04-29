@@ -18,10 +18,8 @@ DecompressTree::DecompressTree(unsigned long sizeLimit) : SIZE_LIMIT(sizeLimit) 
     for(size = 0; size < 256; size++) {
         dictionary.push_back(new DNode(nullptr, static_cast<int>(size)));
     }
-    dictionary.push_back(new DNode(nullptr, -1)); // EOF
-    size++;
 
-    bitsForIndex = 9;
+    bitsForIndex = 8;
     nextBitIncrease = 1u << bitsForIndex;
 
 }

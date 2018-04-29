@@ -9,10 +9,7 @@ CompressTree::CompressTree(unsigned long sizeLimit) : SIZE_LIMIT(sizeLimit) {
         root->insertChild(new CNode(size, static_cast<int>(size)));
     }
 
-    root->insertChild(new CNode(size, EOF));
-    size++;
-
-    bitsForIndex = 9;
+    bitsForIndex = 8;
     nextBitIncrease = 1u << bitsForIndex;
 }
 
