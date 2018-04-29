@@ -33,6 +33,10 @@ unsigned long LzwReader::readIndex(unsigned int bits) {
     return index;
 }
 
+bool LzwReader::good() {
+    return file.peek() != EOF;
+}
+
 void LzwReader::close() {
     file.close();
 }

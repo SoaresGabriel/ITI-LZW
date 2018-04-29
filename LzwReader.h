@@ -22,6 +22,8 @@ public:
 
     unsigned long readIndex(unsigned int bits);
 
+    bool good();
+
     void close();
 };
 

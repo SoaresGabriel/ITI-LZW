@@ -78,8 +78,6 @@ void compress(const string &filename, unsigned int powerMaxSize) {
         writer.writeIndex(current->index, compressTree.bitsForIndex);
     }
 
-    writer.writeIndex(compressTree.root->getChild(EOF)->index, compressTree.bitsForIndex);
-
     inFile.close();
     writer.close();
 }
@@ -99,14 +97,10 @@ void decompress(const string &filename) {
     ofstream outfile(outFilename, ofstream::binary);
 
     DNode* lastNode = nullptr;
-    while(true) {
+    while(reader.good()) {
         unsigned long index = reader.readIndex(decompressTree.bitsForIndex);
 
         DNode* node = decompressTree[index];
-
-        if(node->byte == EOF) {
-            break;
-        }
 
         if(lastNode != nullptr) {
             lastNode->byte = node->getFirstByte();
