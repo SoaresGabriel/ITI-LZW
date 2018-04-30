@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
 
         // get the power of 2 of the size limit of dictionary
         unsigned int p = static_cast<unsigned int>(stoi(argv[2]));
-        if(p < 9 || p > sizeof(unsigned long) * 8 - 1) {
-            cout << "Invalid 'p', must be in (8," << sizeof(unsigned long) * 8 << ")" << endl;
+        if(p < 8 || p > sizeof(unsigned long) * 8 - 1) {
+            cout << "Invalid 'p', must be in [8," << sizeof(unsigned long) * 8 << ")" << endl;
             exit(1);
         }
 
